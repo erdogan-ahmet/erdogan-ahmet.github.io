@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peter B. McCrory</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%233461a8%22/><text x=%2250%22 y=%2266%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>A</text></svg>">
+<meta property="og:title" content="Peter B. McCrory">
+<meta property="og:description" content="Yazılar, notlar ve düşünceler.">
+<meta property="og:type" content="website">
+<meta name="description" content="Yazılar, notlar ve düşünceler.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Peter B. McCrory">
+<meta name="twitter:description" content="Yazılar, notlar ve düşünceler.">
+<!-- Not: Bu etiketler şu an statik. Site adı/açıklamasını admin panelinden değiştirirsen
+     bu meta etiketler otomatik güncellenmez (sayfa tek HTML dosyası olduğu için).
+     Gerekirse ayrıca güncellenmesi istenmeli. -->
+
+<style>
+  :root{
+    --bg:#faf8f3;
+    --bg-card:#ffffff;
+    --line:#e4e0d6;
+    --text:#262420;
+    --text-dim:#7a766c;
+    --accent:#3461a8;
+    --accent-soft:#e7edf8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  #hero{
+    position:relative;
+    height:100vh;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  #network{ position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:0; }
+  #hero, section, footer{ position:relative; z-index:1; }
+  .hero-content{ position:relative; z-index:2; text-align:center; pointer-events:none; }
+  .hero-content h1{
+    font-size:clamp(2rem, 5vw, 3.4rem);
+    font-weight:600;
+    letter-spacing:-0.02em;
+    color:#111;
+  }
+  .hero-content p{
+    margin-top:0.6rem;
+    color:var(--text-dim);
+    font-size:1rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .scroll-cue{
+    position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+    z-index:2; display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+    color:var(--text-dim); font-size:0.75rem; letter-spacing:0.18em; text-transform:uppercase;
+    text-decoration:none; cursor:pointer;
+  }
+  .scroll-cue .chevron{
+    width:10px; height:10px;
+    border-right:1.5px solid var(--text-dim);
+    border-bottom:1.5px solid var(--text-dim);
+    transform:rotate(45deg);
+    animation:bounce 1.8s ease-in-out infinite;
+  }
+  @keyframes bounce{
+    0%,100%{transform:rotate(45deg) translate(0,0);}
+    50%{transform:rotate(45deg) translate(4px,4px);}
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{ max-width:880px; margin:0 auto; padding:6rem 1.5rem; }
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+  h2.section-title{
+    font-size:0.85rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:#111; margin-bottom:1.5rem; font-weight:700;
+  }
+
+  /* ---------- ABOUT ---------- */
+  #about .section-title{
+    font-size:1.9rem;
+    text-transform:none;
+    letter-spacing:-0.01em;
+    font-weight:700;
+    margin-bottom:1.8rem;
+  }
+  #about .about-grid{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:2.2rem;
+    align-items:start;
+  }
+  .about-photo{
+    width:160px; height:160px;
+    border-radius:14px;
+    background:var(--accent-soft);
+    background-size:cover;
+    background-position:center;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dim);
+    font-size:0.78rem;
+    text-align:center;
+    overflow:hidden;
+  }
+  #about p{ font-size:1.08rem; line-height:1.8; color:var(--text); }
+  @media (max-width:560px){
+    #about .about-grid{ grid-template-columns:1fr; }
+    .about-photo{ width:120px; height:120px; }
+  }
+
+  /* ---------- CATEGORIES ---------- */
+  .glass-panel{
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:18px;
+    padding:2.2rem;
+    box-shadow:0 8px 30px rgba(0,0,0,0.03);
+  }
+  .category-grid{
+    display:flex; flex-wrap:wrap; align-items:center; gap:0.8rem;
+  }
+  .post-search-input{
+    width:100%; padding:0.75rem 1rem; margin-bottom:1.2rem;
+    border:1px solid var(--line); border-radius:10px;
+    background:rgba(255,255,255,0.5); color:var(--text);
+    font-size:0.95rem; font-family:inherit;
+  }
+  .post-search-input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .category-label{
+    font-size:0.95rem; font-weight:500; color:var(--text-dim);
+    padding:0.85rem 0.2rem;
+  }
+  .category-divider{
+    width:1px; height:1.6rem; background:var(--line); margin:0 0.4rem;
+  }
+  .category-box{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,0.22);
+    color:var(--text);
+    padding:0.85rem 1.4rem;
+    border-radius:10px;
+    font-size:0.95rem;
+    font-weight:500;
+    cursor:pointer;
+    transition:border-color 0.2s, background 0.2s;
+  }
+  .category-box:hover{ border-color:var(--accent); }
+  .category-box.active{
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
+  }
+  #category-posts{ margin-top:2rem; }
+  .post{ border-top:1px solid var(--line); padding:1.5rem 0; }
+  .post:first-of-type{ border-top:none; }
+  .post-date{ font-size:0.78rem; color:var(--text-dim); letter-spacing:0.06em; }
+  .post .post-cat{
+    display:inline-block;
+    font-size:0.7rem;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+    margin-bottom:0.5rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  .post h3{ margin-top:0.3rem; font-size:1.18rem; font-weight:600; color:#111; }
+  .post .post-toggle{ cursor:pointer; transition:color 0.15s; }
+  .post .post-toggle:hover{ color:var(--accent); }
+
+  /* ---------- POST MODAL ---------- */
+  .post-modal-overlay{
+    position:fixed; inset:0; z-index:60;
+    background:rgba(20,18,15,0.55);
+    backdrop-filter: blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    padding:2rem 1rem;
+    animation: fadeInOverlay 0.25s ease;
+  }
+  @keyframes fadeInOverlay{ from{opacity:0;} to{opacity:1;} }
+  .post-modal{
+    background:var(--bg-card);
+    width:min(880px, 95vw);
+    max-height:88vh;
+    overflow-y:auto;
+    border-radius:16px;
+    padding:3rem;
+    position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,0.25);
+    animation: popIn 0.25s ease;
+  }
+  @keyframes popIn{ from{opacity:0; transform:translateY(16px) scale(0.98);} to{opacity:1; transform:translateY(0) scale(1);} }
+  .post-modal-close{
+    position:absolute; top:1.2rem; right:1.2rem;
+    background:var(--bg); border:1px solid var(--line);
+    color:var(--text-dim); width:36px; height:36px; border-radius:50%;
+    font-size:1rem; cursor:pointer;
+  }
+  .post-modal-close:hover{ color:var(--text); border-color:var(--text-dim); }
+  .post-modal-cat{
+    display:inline-block; font-size:0.72rem; color:var(--accent);
+    background:var(--accent-soft); padding:0.2rem 0.6rem; border-radius:999px;
+    text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.6rem;
+  }
+  .post-modal-date{ font-size:0.8rem; color:var(--text-dim); margin-bottom:0.4rem; }
+  .post-modal h2{ font-size:1.7rem; font-weight:700; color:#111; margin-bottom:1.4rem; }
+  .post-modal-body{ font-size:1.05rem; line-height:1.85; color:var(--text); overflow:auto; }
+  .modal-related{ margin-top:2.2rem; padding-top:1.5rem; border-top:1px solid var(--line); }
+  .modal-related-title{ font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-dim); margin-bottom:0.8rem; }
+  .modal-related-item{
+    padding:0.7rem 0; border-top:1px solid var(--line); cursor:pointer;
+    font-size:0.95rem; color:var(--text); transition:color 0.15s;
+  }
+  .modal-related-item:first-of-type{ border-top:none; }
+  .modal-related-item:hover{ color:var(--accent); }
+  .post-modal-body img{ max-width:42%; border-radius:8px; margin:0.5rem; }
+  .post-modal-body img.float-left{ float:left; }
+  .post-modal-body img.float-right{ float:right; }
+  @media (max-width:560px){
+    .post-modal{ padding:1.8rem; }
+    .post-modal h2{ font-size:1.3rem; }
+  }
+  .post .post-excerpt{
+    margin-top:0.35rem;
+    font-size:0.92rem;
+    font-style:italic;
+    color:var(--text-dim);
+    font-weight:400;
+  }
+  .post-body{ margin-top:0.6rem; color:var(--text-dim); line-height:1.7; font-size:0.96rem; overflow:auto; }
+  .post-body img{ max-width:42%; border-radius:6px; margin:0.4rem; }
+  .post-body img.float-left{ float:left; }
+  .post-body img.float-right{ float:right; }
+  .empty-note{ color:var(--text-dim); font-size:0.95rem; }
+
+  /* ---------- FOOTER (social + contact) ---------- */
+  footer{
+    max-width:880px; margin:0 auto;
+    padding:3.5rem 1.5rem 4rem;
+    border-top:1px solid var(--line);
+  }
+  .footer-grid{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    flex-wrap:wrap; gap:2rem;
+  }
+  .footer-col h4{
+    font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--text-dim); margin-bottom:0.8rem;
+  }
+  .social-links{ display:flex; flex-direction:column; gap:0.5rem; }
+  .social-links a{
+    font-size:0.95rem; text-decoration:none; color:var(--text);
+  }
+  .social-links a:hover{ color:var(--accent); }
+  .admin-entry{ font-size:0.8rem; color:var(--text-dim); text-decoration:none; border-bottom:1px dotted var(--text-dim); }
+
+  /* ---------- ADMIN ---------- */
+  #admin-view{ display:none; position:relative; z-index:2; background:var(--bg); min-height:100vh; }
+  body.admin-mode #hero,
+  body.admin-mode section#about,
+  body.admin-mode section#categories,
+  body.admin-mode footer{ display:none; }
+  body.admin-mode #admin-view{ display:flex; }
+
+  .admin-shell{ display:flex; width:100%; min-height:100vh; }
+  .admin-sidebar{
+    width:230px; flex-shrink:0;
+    background:var(--bg-card);
+    border-right:1px solid var(--line);
+    padding:2rem 1.2rem;
+  }
+  .admin-sidebar h1{ font-size:1.25rem; font-weight:700; margin-bottom:2rem; }
+  .sidebar-nav{ display:flex; flex-direction:column; gap:0.3rem; }
+  .sidebar-item{
+    display:flex; align-items:center; gap:0.7rem;
+    background:none; border:none; text-align:left;
+    padding:0.7rem 0.8rem; border-radius:8px;
+    font-size:0.95rem; color:var(--text-dim); cursor:pointer;
+  }
+  .sidebar-item:hover{ background:var(--accent-soft); }
+  .sidebar-item.active{ background:var(--accent-soft); color:var(--accent); font-weight:600; }
+  .sidebar-back{
+    margin-top:2rem; padding-top:1.2rem; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:0.6rem;
+  }
+  .sidebar-back a{
+    font-size:0.85rem; color:var(--text-dim); text-decoration:none;
+  }
+  .sidebar-back a:hover{ color:var(--accent); }
+
+  /* ---------- GİRİŞ EKRANI ---------- */
+  .login-gate{
+    position:fixed; inset:0; z-index:70;
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    padding:1.5rem;
+  }
+  .login-card{
+    width:min(380px, 100%);
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:2.2rem;
+    box-shadow:0 10px 40px rgba(0,0,0,0.08);
+  }
+  .login-card h2{ font-size:1.2rem; margin-bottom:1.4rem; color:#111; }
+  .login-error{
+    color:#b1483f; font-size:0.85rem; margin-top:0.8rem;
+  }
+
+  .admin-main{ flex:1; padding:2.5rem 3rem; max-width:1400px; }
+  .admin-main h2.page-title{ font-size:1.7rem; font-weight:700; margin-bottom:2rem; }
+  .admin-panel{ display:none; }
+  .admin-panel.active{ display:block; }
+
+  @media (max-width:760px){
+    .admin-shell{ flex-direction:column; }
+    .admin-sidebar{ width:100%; border-right:none; border-bottom:1px solid var(--line); }
+    .sidebar-nav{ flex-direction:row; flex-wrap:wrap; }
+    .admin-main{ padding:1.5rem; }
+  }
+
+  .form-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:10px;
+    padding:1.5rem; margin-bottom:2.5rem;
+  }
+  .form-card h2{ font-size:1rem; margin-bottom:1rem; color:var(--text); }
+  .field{ margin-bottom:1rem; }
+  .field label{ display:block; font-size:0.78rem; color:var(--text-dim); margin-bottom:0.4rem; letter-spacing:0.03em; }
+  .field input, .field textarea, .field select{
+    width:100%; background:var(--bg); border:1px solid var(--line); color:var(--text);
+    border-radius:6px; padding:0.65rem 0.8rem; font-size:0.95rem; font-family:inherit;
+  }
+  .category-checkbox-group{ display:flex; flex-wrap:wrap; gap:0.6rem; }
+  .category-checkbox-group label{
+    display:flex; align-items:center; gap:0.4rem;
+    border:1px solid var(--line); border-radius:8px;
+    padding:0.45rem 0.8rem; font-size:0.85rem; cursor:pointer;
+    color:var(--text); background:var(--bg-card);
+  }
+  .category-checkbox-group input{ width:auto; margin:0; }
+    display:flex; align-items:center; gap:0.8rem; margin-bottom:0.6rem; flex-wrap:wrap;
+  }
+  .editor-btn{ padding:0.5rem 0.9rem; font-size:0.82rem; }
+  .editor-hint{ font-size:0.76rem; color:var(--text-dim); }
+  .rich-editor{
+    width:100%; min-height:340px; max-height:640px; overflow-y:auto;
+    position:relative; background:var(--bg); border:1px solid var(--line);
+    border-radius:6px; padding:1rem; font-size:0.97rem; line-height:1.7;
+    color:var(--text); font-family:inherit;
+  }
+  .rich-editor:empty:before{ content:attr(data-placeholder); color:var(--text-dim); }
+  .rich-editor:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .rich-editor img.editable-img{
+    max-width:42%;
+    position:relative;
+    cursor:move;
+    border-radius:6px;
+    margin:0.4rem;
+    user-select:none;
+    box-shadow:0 0 0 1px var(--line);
+  }
+  .rich-editor img.editable-img.float-left{ float:left; }
+  .rich-editor img.editable-img.float-right{ float:right; }
+  .rich-editor img.dragging{ opacity:0.6; }
+  .field textarea{ resize:vertical; min-height:90px; }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    outline:2px solid var(--accent); outline-offset:1px;
+  }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .btn{
+    background:var(--accent); color:#fff; border:none; border-radius:6px;
+    padding:0.7rem 1.3rem; font-weight:600; font-size:0.9rem; cursor:pointer;
+  }
+  .btn:hover{ opacity:0.9; }
+  .btn:focus-visible{ outline:2px solid var(--text); outline-offset:2px; }
+  .btn-secondary{ background:transparent; color:var(--text-dim); border:1px solid var(--line); }
+  .btn-danger{ background:transparent; color:#b1483f; border:1px solid #e6c9c4; }
+
+  .list-row{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    border:1px solid var(--line); border-radius:8px; padding:1rem 1.2rem;
+    margin-bottom:0.8rem; flex-wrap:wrap; background:var(--bg-card);
+  }
+  .list-row .meta{ flex:1; min-width:200px; }
+  .list-row .meta .title{ font-weight:600; font-size:0.98rem; }
+  .list-row .meta .when{ font-size:0.78rem; color:var(--text-dim); margin-top:0.25rem; }
+  .badge{ font-size:0.7rem; padding:0.2rem 0.55rem; border-radius:999px; letter-spacing:0.04em; text-transform:uppercase; }
+  .badge.live{ background:var(--accent-soft); color:var(--accent); }
+  .badge.scheduled{ background:#f1efe8; color:var(--text-dim); }
+  .actions{ display:flex; gap:0.5rem; }
+  .actions button{
+    background:transparent; border:1px solid var(--line); color:var(--text-dim);
+    border-radius:6px; padding:0.4rem 0.7rem; font-size:0.78rem; cursor:pointer;
+  }
+  .actions button:hover{ color:var(--text); border-color:var(--text-dim); }
+
+  .photo-preview{
+    width:90px; height:90px; border-radius:10px; background:var(--accent-soft);
+    background-size:cover; background-position:center; border:1px solid var(--line);
+    margin-bottom:0.8rem;
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1rem; }
+  .chip{
+    display:flex; align-items:center; gap:0.5rem;
+    background:var(--accent-soft); color:var(--accent);
+    padding:0.4rem 0.7rem; border-radius:999px; font-size:0.85rem;
+  }
+  .chip button{
+    background:none; border:none; color:var(--accent); cursor:pointer; font-size:0.9rem; line-height:1;
+  }
+  .inline-form{ display:flex; gap:0.6rem; }
+  .inline-form input{ flex:1; }
+
+  @media (prefers-reduced-motion: reduce){
+    .scroll-cue .chevron{ animation:none; }
+    html{ scroll-behavior:auto; }
+    .reveal{ transition:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PUBLIC SITE ================= -->
+<canvas id="network"></canvas>
+
+<section id="hero" style="padding:0; max-width:none;">
+  <div class="hero-content">
+    <h1 id="hero-title">Peter B. McCrory</h1>
+    <p id="hero-subtitle">Yazılar &middot; Notlar &middot; Düşünceler</p>
+  </div>
+  <a href="#about" class="scroll-cue" id="scroll-cue"><span>Kaydır</span><span class="chevron"></span></a>
+</section>
+
+<section id="about" class="reveal">
+  <h2 class="section-title">Hakkımda</h2>
+  <div class="about-grid">
+    <div class="about-photo" id="about-photo">Fotoğraf yok</div>
+    <p id="about-text">Merhaba, ben Peter. Burada zaman zaman üzerine düşündüğüm konular hakkında kısa yazılar paylaşıyorum.</p>
+  </div>
+</section>
+
+<section id="categories" class="reveal">
+  <div class="glass-panel">
+    <h2 class="section-title">Konular</h2>
+    <input type="text" id="post-search" class="post-search-input" placeholder="Yazılarda ara...">
+    <div class="category-grid" id="category-grid"></div>
+    <div id="category-posts"></div>
+  </div>
+</section>
+
+<!-- ================= YAZI MODAL (Pop-up) ================= -->
+<div id="post-modal-overlay" class="post-modal-overlay" style="display:none;">
+  <div class="post-modal">
+    <button id="post-modal-close" class="post-modal-close" aria-label="Kapat">✕</button>
+    <div class="post-modal-cat" id="modal-cat"></div>
+    <div class="post-modal-date" id="modal-date"></div>
+    <h2 id="modal-title"></h2>
+    <div class="post-modal-body" id="modal-body"></div>
+    <div id="modal-related" class="modal-related"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Sosyal Medya</h4>
+      <div class="social-links" id="social-links"></div>
+    </div>
+    <div class="footer-col">
+      <h4>İletişim</h4>
+      <div class="social-links" id="contact-info"></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= GİRİŞ EKRANI ================= -->
+<div id="login-gate" class="login-gate" style="display:none;">
+  <div class="login-card">
+    <h2>Yönetim Paneli Girişi</h2>
+    <div class="field">
+      <label for="login-password">Şifre</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn" id="login-submit" style="width:100%;">Giriş Yap</button>
+    <p id="login-error" class="login-error" style="display:none;"></p>
+  </div>
+</div>
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+<div id="admin-view">
+  <div class="admin-shell">
+    <div class="admin-sidebar">
+      <h1>Admin Panel</h1>
+      <nav class="sidebar-nav">
+        <button class="sidebar-item active" data-tab="posts">📝 Yazılar</button>
+        <button class="sidebar-item" data-tab="categories">🏷️ Kategoriler</button>
+        <button class="sidebar-item" data-tab="hero">🏠 Site Başlığı</button>
+        <button class="sidebar-item" data-tab="about">👤 Hakkımda</button>
+        <button class="sidebar-item" data-tab="social">📡 Sosyal &amp; İletişim</button>
+      </nav>
+      <div class="sidebar-back">
+        <a href="#" id="back-link">← Siteye dön</a>
+        <a href="#" id="logout-link">Çıkış Yap</a>
+      </div>
+    </div>
+
+    <div class="admin-main">
+  <!-- POSTS TAB -->
+  <div class="admin-panel active" id="panel-posts">
+    <h2 class="page-title">Yazılar</h2>
+    <div class="form-card">
+      <h2 id="form-title">Yeni Yazı</h2>
+      <form id="post-form">
+        <input type="hidden" id="edit-id">
+        <div class="field">
+          <label for="p-title">Başlık *</label>
+          <input type="text" id="p-title" required placeholder="Yazının başlığı">
+        </div>
+        <div class="field">
+          <label>Konular (birden fazla seçebilirsin)</label>
+          <div id="p-category" class="category-checkbox-group"></div>
+        </div>
+        <div class="field">
+          <label for="p-excerpt">Özet (1-2 cümle, başlığın altında görünür)</label>
+          <input type="text" id="p-excerpt" placeholder="Kısa bir özet yaz...">
+        </div>
+        <div class="field">
+          <label for="p-content">İçerik</label>
+          <div class="editor-toolbar">
+            <button type="button" class="btn-secondary editor-btn" id="insert-image-btn">🖼️ Fotoğraf / Grafik Ekle</button>
+            <input type="file" id="content-image-input" accept="image/*" style="display:none;">
+            <span class="editor-hint">Görseli eklendikten sonra sürükleyerek istediğin yere taşıyabilirsin.</span>
+          </div>
+          <div id="p-content" class="rich-editor" contenteditable="true" data-placeholder="Yazının içeriği..."></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="p-date">Yayın tarihi</label><input type="date" id="p-date" required></div>
+          <div class="field"><label for="p-time">Yayın saati</label><input type="time" id="p-time" required></div>
+        </div>
+        <div style="display:flex; gap:0.7rem;">
+          <button type="submit" class="btn" id="submit-btn">+ Oluştur</button>
+          <button type="button" class="btn btn-secondary" id="cancel-edit" style="display:none;">Vazgeç</button>
+        </div>
+      </form>
+    </div>
+    <h2 class="section-title" style="color:var(--text-dim);">Tüm Yazılar</h2>
+    <div id="admin-list"></div>
+  </div>
+
+  <!-- HERO TAB -->
+  <div class="admin-panel" id="panel-hero">
+    <h2 class="page-title">Site Başlığı</h2>
+    <div class="form-card">
+      <h2>Üst başlık (hero) alanı</h2>
+      <div class="field">
+        <label for="hero-title-input">İsim / Başlık</label>
+        <input type="text" id="hero-title-input" placeholder="Örn: Peter B. McCrory">
+      </div>
+      <div class="field">
+        <label for="hero-subtitle-input">Alt yazı</label>
+        <input type="text" id="hero-subtitle-input" placeholder="Örn: Yazılar · Notlar · Düşünceler">
+      </div>
+      <button class="btn" id="save-hero">Kaydet</button>
+    </div>
+  </div>
+
+  <!-- ABOUT TAB -->
+  <div class="admin-panel" id="panel-about">
+    <h2 class="page-title">Hakkımda</h2>
+    <div class="form-card">
+      <h2>Hakkımda bölümü</h2>
+      <div class="field">
+        <label>Fotoğraf</label>
+        <div class="photo-preview" id="admin-photo-preview"></div>
+        <input type="file" id="photo-input" accept="image/*">
+      </div>
+      <div class="field">
+        <label for="about-input">Hakkımda metni</label>
+        <textarea id="about-input" placeholder="Kendinizden bahsedin..."></textarea>
+      </div>
+      <button class="btn" id="save-about">Kaydet</button>
+    </div>
+  </div>
+
+  <!-- CATEGORIES TAB -->
+  <div class="admin-panel" id="panel-categories">
+    <h2 class="page-title">Kategoriler</h2>
+    <div class="form-card">
+      <h2>Konu başlıkları</h2>
+      <div class="chip-row" id="admin-category-chips"></div>
+      <div class="inline-form">
+        <input type="text" id="new-category" placeholder="Örn: Mikro Ekonomi">
+        <button class="btn" id="add-category">Ekle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL TAB -->
+  <div class="admin-panel" id="panel-social">
+    <h2 class="page-title">Sosyal &amp; İletişim</h2>
+    <div class="form-card">
+      <h2>Sosyal medya hesapları</h2>
+      <div id="social-list-admin"></div>
+      <div class="inline-form" style="margin-top:0.6rem;">
+        <input type="text" id="new-social-label" placeholder="Platform adı (örn: TikTok)" style="max-width:220px;">
+        <input type="text" id="new-social-url" placeholder="https://...">
+        <button class="btn" id="add-social">Ekle</button>
+      </div>
+    </div>
+    <div class="form-card">
+      <h2>İletişim bilgileri</h2>
+      <div class="row2">
+        <div class="field"><label for="s-email">E-posta</label><input type="email" id="s-email" placeholder="ornek@eposta.com"></div>
+        <div class="field"><label for="s-location">Konum</label><input type="text" id="s-location" placeholder="Şehir, Ülke"></div>
+      </div>
+      <button class="btn" id="save-social">Kaydet</button>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= PARÇACIK AĞI ANİMASYONU ================= */
+(function(){
+  const canvas = document.getElementById('network');
+  const ctx = canvas.getContext('2d');
+  const hero = document.getElementById('hero');
+  let particles = [];
+  let mouse = {x:null, y:null, active:false};
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initParticles();
+  }
+  const palette = ['rgba(38,36,32,0.7)','rgba(40,99,189,0.75)','rgba(80,140,230,0.7)','rgba(130,170,235,0.65)','rgba(20,70,150,0.7)'];
+
+  function initParticles(){
+    const count = window.innerWidth < 700 ? 62 : 132;
+    particles = [];
+    for(let i=0;i<count;i++){
+      particles.push({
+        x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+        vx: (Math.random()-0.5)*0.35, vy: (Math.random()-0.5)*0.35, r: 1.9,
+        color: palette[Math.floor(Math.random()*palette.length)]
+      });
+    }
+  }
+  /* ----- Konu sembolleri (yüklenen SVG referansına göre, normalize edilmiş koordinatlar) ----- */
+  let morphActive = false, morphEndTime = 0, currentMorphGroups = [];
+
+  const SHAPE_POINTS = {
+    'tüm araştırmalar': [
+      {x:-35,y:55},{x:-20,y:25},{x:-40,y:0},{x:0,y:0},
+      {x:20,y:15},{x:10,y:-30},{x:40,y:-50},{x:-15,y:-55}
+    ],
+    'bilim ve teknoloji': [
+      {x:0,y:-45},{x:40,y:-25},{x:40,y:25},{x:0,y:45},
+      {x:-40,y:25},{x:-40,y:-25},{x:0,y:0}
+    ],
+    'ekonomi': [
+      {x:-60,y:7.5},{x:60,y:7.5},{x:-35,y:-37.5},
+      {x:-10,y:37.5},{x:15,y:-17.5},{x:35,y:17.5}
+    ],
+    'girişimcilik': [
+      {x:0,y:0},{x:0,y:-55},{x:45,y:-30},{x:55,y:10},
+      {x:30,y:50},{x:-25,y:55},{x:-50,y:25},{x:-55,y:-25},{x:75,y:-65}
+    ],
+    'sosyal bilimler ve insan davranışı': [
+      {x:-47.5,y:-45},{x:-30.5,y:-50},{x:-34.5,y:-33},
+      {x:27.5,y:-35},{x:45.5,y:-43},{x:49.5,y:-23},{x:32.5,y:-17},
+      {x:-22.5,y:35},{x:-4.5,y:43},
+      {x:-62.5,y:10},{x:62.5,y:20},{x:7.5,y:-55},{x:-57.5,y:55}
+    ]
+  };
+  // [fromIndex, toIndex, kesikMi, kalinlik]
+  const SHAPE_EDGES = {
+    'tüm araştırmalar': [[0,1,false,2.5],[1,3,false,2.5],[3,5,false,2.5],[5,6,false,2.5],[1,2,true,1.8],[3,4,true,1.8],[5,7,true,1.8]],
+    'bilim ve teknoloji': [[0,1,false,2.5],[1,2,false,2.5],[2,3,false,2.5],[3,4,false,2.5],[4,5,false,2.5],[5,0,false,2.5],[6,0,false,1.8],[6,2,false,1.8],[6,4,false,1.8]],
+    'ekonomi': [[0,2,false,2.5],[2,3,false,2.5],[3,4,false,2.5],[4,5,false,2.5],[5,1,false,2.5],[0,1,true,1.8]],
+    'girişimcilik': [[0,1,false,2.5],[0,2,false,2.5],[0,3,true,1.8],[0,4,false,2.5],[0,5,true,1.8],[0,6,false,2.5],[0,7,true,1.8],[0,8,false,3.2]],
+    'sosyal bilimler ve insan davranışı': [[0,1,false,2.5],[1,2,false,2.5],[0,2,false,2.5],[3,4,false,2.5],[4,5,false,2.5],[5,6,false,2.5],[6,3,false,2.5],[3,5,true,1.8],[7,8,false,2.5],[2,3,true,1.8],[6,8,true,1.8]]
+  };
+  const SHAPE_SIZES = {
+    'tüm araştırmalar': [6,4,2.5,4,2.5,4.5,6,2.5],
+    'bilim ve teknoloji': [3.5,3.5,3.5,3.5,3.5,3.5,7],
+    'ekonomi': [7,7,3.5,3.5,3.5,3.5],
+    'girişimcilik': [7,4,4,3,4,3,4,3,6],
+    'sosyal bilimler ve insan davranışı': [4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,3,3,3,3]
+  };
+  // Türkçe karakter normalize ederek anahtar eşleştirme
+  function normalizeKey(str){
+    return (str||'')
+      .replace(/İ/g,'i')
+      .toLowerCase()
+      .replace(/ı/g,'i').replace(/ş/g,'s')
+      .replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c');
+  }
+  function makeKeyMap(obj){
+    const m = {};
+    Object.keys(obj).forEach(k => { m[normalizeKey(k)] = obj[k]; });
+    return m;
+  }
+  const SHAPE_POINTS_K = makeKeyMap(SHAPE_POINTS);
+  const SHAPE_EDGES_K = makeKeyMap(SHAPE_EDGES);
+  const SHAPE_SIZES_K = makeKeyMap(SHAPE_SIZES);
+
+  function getShapePoints(name){ return SHAPE_POINTS_K[normalizeKey(name)] || null; }
+
+  function setReleasing(p){
+    p.morphing = false;
+    p.morphRadius = null;
+    p.releasing = true;
+    p.releaseStart = Date.now();
+  }
+
+  function triggerMorph(categoryNames){
+    const matched = (categoryNames||[]).filter(n => getShapePoints(n));
+    const previouslyMorphing = particles.filter(p=>p.morphing);
+
+    if(matched.length === 0){
+      previouslyMorphing.forEach(setReleasing);
+      morphActive = false;
+      currentMorphGroups = [];
+      return;
+    }
+
+    previouslyMorphing.forEach(setReleasing);
+    const idxs = [...Array(particles.length).keys()];
+    for(let i=idxs.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [idxs[i],idxs[j]]=[idxs[j],idxs[i]];
+    }
+    let cursor = 0;
+    currentMorphGroups = [];
+
+    // Seçilen konunun sembolünü, ekranın farklı yerlerinde birden fazla kopya halinde dağıt
+    const name = matched[0];
+    const basePts = getShapePoints(name);
+    const sizes = SHAPE_SIZES_K[normalizeKey(name)] || [];
+    const edges = SHAPE_EDGES_K[normalizeKey(name)] || [];
+    const pointsPerInstance = basePts.length;
+    const maxInstances = Math.max(1, Math.floor(particles.length / pointsPerInstance));
+    const instances = Math.min(7, Math.max(5, Math.round(maxInstances*1.6)));
+
+    // Nokta sayısı fazla olan (daha "seyrek görünen") şekiller için ek büyütme
+    const SHAPE_SCALE_BOOST = { 'sosyal bilimler ve insan davranışı': 1.45 };
+    const shapeBoost = SHAPE_SCALE_BOOST[normalizeKey(name)] || 1;
+
+    const baseScale = Math.max(1.12, Math.min(1.82, Math.min(canvas.width, canvas.height)/700 * 1.4)) * shapeBoost;
+    const margin = 90 * baseScale;
+
+    // Çakışmayı azaltmak için ekranı kabaca gridlere bölüp her kopyayı farklı bir hücreye dağıt
+    const cols = instances <= 2 ? 2 : Math.ceil(Math.sqrt(instances));
+    const rows = Math.ceil(instances/cols);
+    const cellW = canvas.width / cols;
+    const cellH = canvas.height / rows;
+
+    for(let inst=0; inst<instances; inst++){
+      const col = inst % cols, row = Math.floor(inst/cols);
+      const cx = Math.min(canvas.width-margin, Math.max(margin, cellW*col + cellW*(0.1+Math.random()*0.8)));
+      const cy = Math.min(canvas.height-margin, Math.max(margin, cellH*row + cellH*(0.1+Math.random()*0.8)));
+      const scale = baseScale * (0.6 + Math.random()*0.9);
+      const groupParticles = [];
+      basePts.forEach((pt,pi)=>{
+        if(cursor >= particles.length) return;
+        const p = particles[idxs[cursor++]];
+        p.morphing = true;
+        p.releasing = false;
+        p.morphTargetX = cx + pt.x*scale;
+        p.morphTargetY = cy + pt.y*scale;
+        p.morphRadius = (sizes[pi] || 4) * Math.min(scale,1.7) * 0.85;
+        p.wigglePhase = Math.random()*Math.PI*2;
+        p.wiggleSpeed = 0.0009 + Math.random()*0.0008;
+        groupParticles.push(p);
+      });
+      currentMorphGroups.push({ particles: groupParticles, edges });
+    }
+
+    morphActive = true;
+    morphEndTime = Date.now() + 8000;
+  }
+  window.triggerCategoryMorph = triggerMorph;
+
+  function step(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const releaseStartTime = morphEndTime - 1000; // kaybolma, sürenin dolmasından 1sn önce başlar
+    const morphing = morphActive && Date.now() < releaseStartTime;
+    if(morphActive && !morphing){
+      particles.filter(p=>p.morphing).forEach(setReleasing);
+      morphActive = false;
+      currentMorphGroups = [];
+    }
+    for(const p of particles){
+      if(p.morphing){
+        const now = Date.now();
+        const wx = p.morphTargetX + Math.sin(now*p.wiggleSpeed + p.wigglePhase)*5;
+        const wy = p.morphTargetY + Math.cos(now*p.wiggleSpeed*1.3 + p.wigglePhase)*5;
+        p.x += (wx - p.x)*0.12;
+        p.y += (wy - p.y)*0.12;
+      } else if(p.releasing){
+        // Eski şekilden çıkış: bitiş anından 1sn önce başlar, 1sn sonra biter (toplam 2sn), yavaş ve yumuşak
+        const t = Math.min(1, (Date.now() - p.releaseStart) / 7000);
+        const ease = t*t*t*(t*(t*6-15)+10); // smootherstep: başlangıçta çok daha yavaş açılır
+        p.x += p.vx * ease;
+        p.y += p.vy * ease;
+        if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        if(t >= 1){ p.releasing = false; }
+      } else {
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      }
+    }
+    const linkDist = 130;
+    const ambientFade = morphing ? 0.4 : 1;
+    const linkable = morphing ? particles.filter(p=>!p.morphing) : particles;
+    const all = mouse.active ? linkable.concat([{x:mouse.x, y:mouse.y, mouse:true}]) : linkable;
+    for(let i=0;i<all.length;i++){
+      for(let j=i+1;j<all.length;j++){
+        const a = all[i], b = all[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < linkDist){
+          const opacity = (1 - dist/linkDist) * (a.mouse || b.mouse ? 0.65 : 0.35) * ambientFade;
+          ctx.strokeStyle = `rgba(52,97,168,${opacity})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    // Sembol kenarlarını çiz — rengi ve kalınlığı normal arka plan çizgileriyle birebir aynı
+    if(morphing){
+      currentMorphGroups.forEach(group=>{
+        group.edges.forEach(([fi,ti,dashed])=>{
+          const a = group.particles[fi], b = group.particles[ti];
+          if(!a || !b) return;
+          ctx.save();
+          ctx.setLineDash(dashed ? [3,5] : []);
+          ctx.strokeStyle = 'rgba(52,97,168,0.65)';
+          ctx.lineWidth = 1.6;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          ctx.restore();
+        });
+      });
+    }
+    for(const p of particles){
+      ctx.globalAlpha = (p.morphing || !morphing) ? 1 : ambientFade;
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    if(!reduceMotion) requestAnimationFrame(step);
+  }
+  window.addEventListener('mousemove', e=>{
+    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+  });
+  document.addEventListener('mouseleave', ()=>{ mouse.active = false; });
+  window.addEventListener('resize', resize);
+  resize();
+  if(reduceMotion){ step(); } else { requestAnimationFrame(step); }
+})();
+
+/* ================= SCROLL REVEAL ================= */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('visible'); });
+  }, {threshold:0.12});
+  els.forEach(el=>obs.observe(el));
+})();
+
+/* ================= VERİ KATMANI ================= */
+const POSTS_KEY = 'posts';
+const SITE_KEY = 'site-data';
+
+const SPECIAL_CATEGORIES = ['Tüm Araştırmalar', 'Ekonomi', 'Sosyal Bilimler ve İnsan Davranışı', 'Bilim ve Teknoloji', 'Girişimcilik'];
+
+const DEFAULT_SITE = {
+  heroTitle: 'Peter B. McCrory',
+  heroSubtitle: 'Yazılar · Notlar · Düşünceler',
+  aboutText: 'Merhaba, ben Peter. Burada zaman zaman üzerine düşündüğüm konular hakkında kısa yazılar paylaşıyorum.',
+  aboutPhoto: '',
+  categories: [...SPECIAL_CATEGORIES],
+  social: { email:'', location:'' },
+  socialLinks: [
+    { label:'X / Twitter', url:'' },
+    { label:'LinkedIn', url:'' }
+  ]
+};
+
+/* ================= VERİTABANI BAĞLANTISI (Supabase) =================
+   Aşağıdaki iki değeri kendi Supabase projenden alıp buraya yapıştır.
+   Nasıl alınacağı: Supabase > Project Settings > API
+*/
+const SUPABASE_URL = 'https://pjffktileyhnfrqmvxwe.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqZmZrdGlsZXlobmZycW12eHdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NjkwNzcsImV4cCI6MjA5ODI0NTA3N30.JnrxmW0-C79fp1WqnqxcCM8462EXKke1bugopstbGpI';
+
+const DB_ENABLED = !SUPABASE_URL.includes('BURAYA') && !SUPABASE_KEY.includes('BURAYA');
+
+async function sbRequest(path, options={}){
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    method: options.method || 'GET',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': options.prefer || 'return=representation',
+    },
+    body: options.body
+  });
+  return res;
+}
+async function dbGet(key){
+  if(!DB_ENABLED) return getLocal(key);
+  try{
+    const res = await sbRequest(`site_data?key=eq.${encodeURIComponent(key)}&select=value`);
+    const data = await res.json();
+    return (data && data[0]) ? { value: data[0].value } : null;
+  }catch(e){ return getLocal(key); }
+}
+async function dbSet(key, value){
+  if(!DB_ENABLED) return setLocal(key, value);
+  try{
+    await sbRequest('site_data', {
+      method:'POST',
+      prefer:'resolution=merge-duplicates',
+      body: JSON.stringify({ key, value })
+    });
+    return true;
+  }catch(e){ return setLocal(key, value); }
+}
+// Supabase bağlanmadıysa (DB_ENABLED=false) Claude'un kendi geçici depolamasına düşer (yedek)
+async function getLocal(key){
+  try{ const r = await window.storage.get(key, false); return r || null; }catch(e){ return null; }
+}
+async function setLocal(key, value){
+  try{ await window.storage.set(key, value, false); }catch(e){}
+}
+
+async function loadPosts(){
+  try{
+    const r = await dbGet(POSTS_KEY);
+    return r ? JSON.parse(r.value) : await seedFirstPost();
+  }
+  catch(e){ return await seedFirstPost(); }
+}
+async function seedFirstPost(){
+  const seeded = [{
+    id: crypto.randomUUID(),
+    title: 'Faiz Kararlarının Enflasyon Üzerindeki Etkisi',
+    category: 'Makro Ekonomi',
+    excerpt: 'Merkez bankalarının faiz politikaları, fiyat istikrarını nasıl şekillendiriyor?',
+    content: 'Bu örnek bir yazıdır. Burada makro ekonomi konusunda kısa bir analiz paylaşabilirsin. Yönetim panelinden bu yazıyı düzenleyebilir veya silebilirsin.',
+    publishAt: new Date(Date.now() - 1000*60*60).toISOString()
+  }];
+  try{ await savePosts(seeded); }catch(e){}
+  return seeded;
+}
+async function savePosts(posts){
+  try{ await dbSet(POSTS_KEY, JSON.stringify(posts)); }
+  catch(e){ console.error('Kaydetme hatası', e); }
+}
+async function loadSiteData(){
+  let data;
+  try{
+    const r = await dbGet(SITE_KEY);
+    data = r ? {...DEFAULT_SITE, ...JSON.parse(r.value)} : {...DEFAULT_SITE};
+  }catch(e){ data = {...DEFAULT_SITE}; }
+
+  // Özel 5 başlığın her zaman, baştaki sırasıyla var olmasını garanti et
+  const existingExtras = (data.categories || []).filter(c => !SPECIAL_CATEGORIES.includes(c));
+  data.categories = [...SPECIAL_CATEGORIES, ...existingExtras];
+  return data;
+}
+async function saveSiteData(data){
+  try{ await dbSet(SITE_KEY, JSON.stringify(data)); }
+  catch(e){ console.error('Kaydetme hatası', e); }
+}
+
+function fmtDate(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'}) + ' · ' +
+         d.toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+}
+function escapeHtml(str){
+  const div = document.createElement('div'); div.textContent = str; return div.innerHTML;
+}
+
+let activeCategories = new Set();
+
+/* ----- PUBLIC: Hero ----- */
+async function renderHero(){
+  const site = await loadSiteData();
+  document.getElementById('hero-title').textContent = site.heroTitle;
+  document.getElementById('hero-subtitle').textContent = site.heroSubtitle;
+}
+
+/* ----- PUBLIC: About ----- */
+async function renderAbout(){
+  const site = await loadSiteData();
+  document.getElementById('about-text').textContent = site.aboutText;
+  const photo = document.getElementById('about-photo');
+  if(site.aboutPhoto){
+    photo.style.backgroundImage = `url(${site.aboutPhoto})`;
+    photo.textContent = '';
+  } else {
+    photo.style.backgroundImage = '';
+    photo.textContent = 'Fotoğraf yok';
+  }
+}
+
+/* ----- PUBLIC: Categories + filtered posts ----- */
+async function renderCategories(){
+  const site = await loadSiteData();
+  const grid = document.getElementById('category-grid');
+  const allLabel = 'Tüm Araştırmalar';
+  const realCategories = site.categories.filter(c => c !== allLabel);
+  grid.innerHTML =
+    `<button class="category-box ${activeCategories.size===0?'active':''}" data-cat="${escapeHtml(allLabel)}">${escapeHtml(allLabel)}</button>
+     <span class="category-divider"></span>` +
+    realCategories.map(c =>
+      `<button class="category-box ${activeCategories.has(c)?'active':''}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`
+    ).join('');
+  grid.querySelectorAll('.category-box').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const cat = btn.dataset.cat;
+      if(cat === allLabel || activeCategories.has(cat)){
+        activeCategories.clear();
+      } else {
+        activeCategories.clear();
+        activeCategories.add(cat);
+      }
+      await renderCategories();
+      await renderCategoryPosts();
+      if(window.triggerCategoryMorph) window.triggerCategoryMorph([...activeCategories]);
+    });
+  });
+}
+
+function estimateReadingMinutes(html){
+  const text = (html || '').replace(/<[^>]*>/g, ' ');
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 180));
+}
+
+let searchTerm = '';
+
+async function renderCategoryPosts(){
+  const container = document.getElementById('category-posts');
+  const posts = await loadPosts();
+  const now = new Date();
+  const term = searchTerm.trim().toLowerCase();
+  const filtered = posts
+    .filter(p => {
+      const cats = p.categories || [p.category];
+      const matchesCategory = activeCategories.size === 0 || cats.some(c => activeCategories.has(c));
+      const matchesSearch = !term ||
+        (p.title||'').toLowerCase().includes(term) ||
+        (p.excerpt||'').toLowerCase().includes(term) ||
+        (p.content||'').toLowerCase().includes(term);
+      return matchesCategory && matchesSearch && new Date(p.publishAt) <= now;
+    })
+    .sort((a,b)=> new Date(b.publishAt) - new Date(a.publishAt));
+
+  if(filtered.length === 0){
+    container.innerHTML = `<p class="empty-note">${term ? 'Aramanla eşleşen bir yazı bulunamadı.' : 'Henüz yayınlanmış bir yazı yok.'}</p>`;
+    return;
+  }
+  container.innerHTML = filtered.map(p => `
+    <article class="post">
+      <div class="post-cat">${escapeHtml((p.categories||[p.category]).filter(Boolean).join(', '))}</div>
+      <div class="post-date">${fmtDate(p.publishAt)} · ${estimateReadingMinutes(p.content)} dk okuma</div>
+      <h3 class="post-toggle" data-id="${p.id}">${escapeHtml(p.title)}</h3>
+      ${p.excerpt ? `<div class="post-excerpt">${escapeHtml(p.excerpt)}</div>` : ''}
+    </article>
+  `).join('');
+
+  container.querySelectorAll('.post-toggle').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const post = filtered.find(p=>p.id === el.dataset.id);
+      if(post) openPostModal(post, posts);
+    });
+  });
+}
+
+document.getElementById('post-search').addEventListener('input', async (e)=>{
+  searchTerm = e.target.value;
+  await renderCategoryPosts();
+});
+
+function openPostModal(post, allPosts){
+  document.getElementById('modal-cat').textContent = (post.categories||[post.category]).filter(Boolean).join(', ');
+  document.getElementById('modal-date').textContent = `${fmtDate(post.publishAt)} · ${estimateReadingMinutes(post.content)} dk okuma`;
+  document.getElementById('modal-title').textContent = post.title;
+  document.getElementById('modal-body').innerHTML = post.content;
+
+  // İlgili yazılar: aynı konudan, kendisi hariç, en yeni 3 yazı
+  const related = (allPosts||[])
+    .filter(p => p.id !== post.id && new Date(p.publishAt) <= new Date())
+    .filter(p => {
+      const cats = p.categories || [p.category];
+      const postCats = post.categories || [post.category];
+      return cats.some(c => postCats.includes(c));
+    })
+    .sort((a,b)=> new Date(b.publishAt) - new Date(a.publishAt))
+    .slice(0,3);
+
+  const relatedBox = document.getElementById('modal-related');
+  if(related.length === 0){
+    relatedBox.innerHTML = '';
+  } else {
+    relatedBox.innerHTML = `
+      <div class="modal-related-title">İlgili yazılar</div>
+      ${related.map(r => `<div class="modal-related-item" data-id="${r.id}">${escapeHtml(r.title)}</div>`).join('')}
+    `;
+    relatedBox.querySelectorAll('.modal-related-item').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const next = allPosts.find(p=>p.id===el.dataset.id);
+        if(next) openPostModal(next, allPosts);
+      });
+    });
+  }
+
+  document.getElementById('post-modal-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closePostModal(){
+  document.getElementById('post-modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.getElementById('post-modal-close').addEventListener('click', closePostModal);
+document.getElementById('post-modal-overlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'post-modal-overlay') closePostModal();
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closePostModal();
+});
+
+/* ----- PUBLIC: Footer (social + contact) ----- */
+async function renderFooter(){
+  const site = await loadSiteData();
+  const s = site.social;
+  const links = site.socialLinks || [];
+  const socialHtml = links
+    .filter(l => l.url)
+    .map(l => `<a href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.label)}</a>`)
+    .join('');
+  document.getElementById('social-links').innerHTML = socialHtml || '<span class="empty-note">Henüz eklenmedi</span>';
+
+  let contactHtml = '';
+  if(s.email) contactHtml += `<a href="mailto:${escapeHtml(s.email)}">${escapeHtml(s.email)}</a>`;
+  if(s.location) contactHtml += `<span>${escapeHtml(s.location)}</span>`;
+  document.getElementById('contact-info').innerHTML = contactHtml || '<span class="empty-note">Henüz eklenmedi</span>';
+}
+
+/* ================= ADMIN: Posts ================= */
+async function populateCategorySelect(){
+  const site = await loadSiteData();
+  const wrap = document.getElementById('p-category');
+  wrap.innerHTML = site.categories.map(c => `
+    <label><input type="checkbox" value="${escapeHtml(c)}"> ${escapeHtml(c)}</label>
+  `).join('');
+}
+function getSelectedCategories(){
+  return Array.from(document.querySelectorAll('#p-category input:checked')).map(i=>i.value);
+}
+function setSelectedCategories(cats){
+  document.querySelectorAll('#p-category input').forEach(i=>{
+    i.checked = (cats||[]).includes(i.value);
+  });
+}
+
+async function renderAdminPostList(){
+  const posts = await loadPosts();
+  const now = new Date();
+  const sorted = posts.slice().sort((a,b)=> new Date(b.publishAt) - new Date(a.publishAt));
+  const list = document.getElementById('admin-list');
+  if(sorted.length === 0){
+    list.innerHTML = '<p class="empty-note">Henüz bir paylaşım eklemedin.</p>';
+    return;
+  }
+  list.innerHTML = sorted.map(p => {
+    const isLive = new Date(p.publishAt) <= now;
+    return `
+      <div class="list-row">
+        <div class="meta">
+          <div class="title">${escapeHtml(p.title)} <span class="post-cat" style="margin-left:0.4rem;">${escapeHtml((p.categories||[p.category]).filter(Boolean).join(', '))}</span></div>
+          <div class="when">${fmtDate(p.publishAt)}</div>
+        </div>
+        <span class="badge ${isLive ? 'live':'scheduled'}">${isLive ? 'Yayında' : 'Zamanlandı'}</span>
+        <div class="actions">
+          <button data-action="edit" data-id="${p.id}">Düzenle</button>
+          <button data-action="delete" data-id="${p.id}">Sil</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  list.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const id = btn.dataset.id;
+      if(btn.dataset.action === 'delete'){
+        if(confirm('Bu paylaşımı silmek istediğine emin misin?')){
+          const posts = await loadPosts();
+          await savePosts(posts.filter(p=>p.id !== id));
+          await renderAdminPostList();
+          await renderCategoryPosts();
+        }
+      } else {
+        const posts = await loadPosts();
+        const post = posts.find(p=>p.id === id);
+        if(post) fillFormForEdit(post);
+      }
+    });
+  });
+}
+
+function fillFormForEdit(post){
+  document.getElementById('edit-id').value = post.id;
+  document.getElementById('p-title').value = post.title;
+  setSelectedCategories(post.categories || [post.category]);
+  document.getElementById('p-excerpt').value = post.excerpt || '';
+  document.getElementById('p-content').innerHTML = post.content;
+  const d = new Date(post.publishAt);
+  document.getElementById('p-date').value = d.toISOString().slice(0,10);
+  document.getElementById('p-time').value = d.toTimeString().slice(0,5);
+  document.getElementById('form-title').textContent = 'Paylaşımı düzenle';
+  document.getElementById('submit-btn').textContent = 'Güncelle';
+  document.getElementById('cancel-edit').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function resetForm(){
+  document.getElementById('post-form').reset();
+  document.getElementById('p-content').innerHTML = '';
+  document.getElementById('edit-id').value = '';
+  document.getElementById('form-title').textContent = 'Yeni paylaşım';
+  document.getElementById('submit-btn').textContent = 'Kaydet';
+  document.getElementById('cancel-edit').style.display = 'none';
+}
+document.getElementById('cancel-edit').addEventListener('click', resetForm);
+
+/* ----- Editör içine resim ekleme ----- */
+const richEditor = document.getElementById('p-content');
+document.getElementById('insert-image-btn').addEventListener('click', ()=>{
+  document.getElementById('content-image-input').click();
+});
+document.getElementById('content-image-input').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 2*1024*1024){
+    alert('Görsel çok büyük. Lütfen 2MB altında bir dosya seç.');
+    e.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    const img = document.createElement('img');
+    img.src = reader.result;
+    img.className = 'editable-img float-left';
+    img.draggable = false;
+    richEditor.appendChild(img);
+    makeImageDraggable(img);
+    richEditor.focus();
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
+function makeImageDraggable(img){
+  let startX, startY, origLeft, origTop, dragging=false;
+  img.addEventListener('mousedown', (e)=>{
+    e.preventDefault();
+    dragging = true;
+    img.classList.add('dragging');
+    const rect = img.getBoundingClientRect();
+    const parentRect = richEditor.getBoundingClientRect();
+    if(getComputedStyle(img).position !== 'absolute'){
+      img.style.position = 'absolute';
+      img.style.left = (rect.left - parentRect.left + richEditor.scrollLeft) + 'px';
+      img.style.top = (rect.top - parentRect.top + richEditor.scrollTop) + 'px';
+      img.classList.remove('float-left','float-right');
+    }
+    startX = e.clientX; startY = e.clientY;
+    origLeft = parseFloat(img.style.left);
+    origTop = parseFloat(img.style.top);
+
+    function onMove(ev){
+      if(!dragging) return;
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      img.style.left = (origLeft + dx) + 'px';
+      img.style.top = (origTop + dy) + 'px';
+    }
+    function onUp(){
+      dragging = false;
+      img.classList.remove('dragging');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+  // double click toggles between float-left / float-right / free positioning
+  img.addEventListener('dblclick', ()=>{
+    if(img.classList.contains('float-left')){
+      img.classList.remove('float-left'); img.classList.add('float-right');
+    } else if(img.classList.contains('float-right')){
+      img.classList.remove('float-right');
+      img.style.position='static'; img.style.left=''; img.style.top='';
+    } else {
+      img.style.position='';
+      img.classList.add('float-left');
+    }
+  });
+}
+// İçeriği yüklerken (edit modunda) mevcut görsellere de sürükleme özelliği ekle
+function rebindEditorImages(){
+  richEditor.querySelectorAll('img.editable-img').forEach(img=>{
+    if(!img.dataset.bound){ makeImageDraggable(img); img.dataset.bound = '1'; }
+  });
+}
+const editorObserver = new MutationObserver(rebindEditorImages);
+editorObserver.observe(richEditor, {childList:true});
+
+document.getElementById('post-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const id = document.getElementById('edit-id').value;
+  const title = document.getElementById('p-title').value.trim();
+  const categories = getSelectedCategories();
+  const excerpt = document.getElementById('p-excerpt').value.trim();
+  const content = document.getElementById('p-content').innerHTML.trim();
+  const date = document.getElementById('p-date').value;
+  const time = document.getElementById('p-time').value;
+  const publishAt = new Date(`${date}T${time}`).toISOString();
+
+  const posts = await loadPosts();
+  if(id){
+    const idx = posts.findIndex(p=>p.id === id);
+    if(idx > -1) posts[idx] = {...posts[idx], title, categories, excerpt, content, publishAt};
+  } else {
+    posts.push({id: crypto.randomUUID(), title, categories, excerpt, content, publishAt});
+  }
+  await savePosts(posts);
+  resetForm();
+  await renderAdminPostList();
+  await renderCategoryPosts();
+});
+
+/* ================= ADMIN: Hero ================= */
+async function loadHeroPanel(){
+  const site = await loadSiteData();
+  document.getElementById('hero-title-input').value = site.heroTitle;
+  document.getElementById('hero-subtitle-input').value = site.heroSubtitle;
+}
+document.getElementById('save-hero').addEventListener('click', async ()=>{
+  const site = await loadSiteData();
+  site.heroTitle = document.getElementById('hero-title-input').value.trim() || DEFAULT_SITE.heroTitle;
+  site.heroSubtitle = document.getElementById('hero-subtitle-input').value.trim() || DEFAULT_SITE.heroSubtitle;
+  await saveSiteData(site);
+  await renderHero();
+  alert('Site başlığı güncellendi.');
+});
+
+/* ================= ADMIN: About ================= */
+async function loadAboutPanel(){
+  const site = await loadSiteData();
+  document.getElementById('about-input').value = site.aboutText;
+  const preview = document.getElementById('admin-photo-preview');
+  if(site.aboutPhoto) preview.style.backgroundImage = `url(${site.aboutPhoto})`;
+}
+document.getElementById('photo-input').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 1.5*1024*1024){
+    alert('Fotoğraf çok büyük. Lütfen 1.5MB altında bir görsel seç.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    document.getElementById('admin-photo-preview').style.backgroundImage = `url(${reader.result})`;
+    document.getElementById('admin-photo-preview').dataset.value = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById('save-about').addEventListener('click', async ()=>{
+  const site = await loadSiteData();
+  site.aboutText = document.getElementById('about-input').value.trim();
+  const preview = document.getElementById('admin-photo-preview');
+  if(preview.dataset.value) site.aboutPhoto = preview.dataset.value;
+  await saveSiteData(site);
+  await renderAbout();
+  alert('Hakkımda bölümü güncellendi.');
+});
+
+/* ================= ADMIN: Categories ================= */
+async function renderAdminCategories(){
+  const site = await loadSiteData();
+  const chips = document.getElementById('admin-category-chips');
+  chips.innerHTML = site.categories.map(c =>
+    `<span class="chip">${escapeHtml(c)}<button data-cat="${escapeHtml(c)}">×</button></span>`
+  ).join('');
+  chips.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const site = await loadSiteData();
+      site.categories = site.categories.filter(c=>c !== btn.dataset.cat);
+      await saveSiteData(site);
+      await renderAdminCategories();
+      await renderCategories();
+      await populateCategorySelect();
+    });
+  });
+}
+document.getElementById('add-category').addEventListener('click', async ()=>{
+  const input = document.getElementById('new-category');
+  const val = input.value.trim();
+  if(!val) return;
+  const site = await loadSiteData();
+  if(!site.categories.includes(val)) site.categories.push(val);
+  await saveSiteData(site);
+  input.value = '';
+  await renderAdminCategories();
+  await renderCategories();
+  await populateCategorySelect();
+});
+
+/* ================= ADMIN: Social ================= */
+async function loadSocialPanel(){
+  const site = await loadSiteData();
+  document.getElementById('s-email').value = site.social.email || '';
+  document.getElementById('s-location').value = site.social.location || '';
+  await renderAdminSocialList();
+}
+async function renderAdminSocialList(){
+  const site = await loadSiteData();
+  const links = site.socialLinks || [];
+  const list = document.getElementById('social-list-admin');
+  if(links.length === 0){
+    list.innerHTML = '<p class="empty-note">Henüz sosyal medya hesabı eklenmedi.</p>';
+    return;
+  }
+  list.innerHTML = links.map((l,i) => `
+    <div class="list-row">
+      <div class="meta">
+        <div class="title">${escapeHtml(l.label)}</div>
+        <div class="when">${escapeHtml(l.url) || '—'}</div>
+      </div>
+      <div class="actions">
+        <button data-action="delete-social" data-index="${i}">Sil</button>
+      </div>
+    </div>
+  `).join('');
+  list.querySelectorAll('button[data-action="delete-social"]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const site = await loadSiteData();
+      site.socialLinks.splice(parseInt(btn.dataset.index), 1);
+      await saveSiteData(site);
+      await renderAdminSocialList();
+      await renderFooter();
+    });
+  });
+}
+document.getElementById('add-social').addEventListener('click', async ()=>{
+  const labelInput = document.getElementById('new-social-label');
+  const urlInput = document.getElementById('new-social-url');
+  const label = labelInput.value.trim();
+  const url = urlInput.value.trim();
+  if(!label || !url) return;
+  const site = await loadSiteData();
+  site.socialLinks = site.socialLinks || [];
+  site.socialLinks.push({label, url});
+  await saveSiteData(site);
+  labelInput.value = ''; urlInput.value = '';
+  await renderAdminSocialList();
+  await renderFooter();
+});
+document.getElementById('save-social').addEventListener('click', async ()=>{
+  const site = await loadSiteData();
+  site.social = {
+    email: document.getElementById('s-email').value.trim(),
+    location: document.getElementById('s-location').value.trim()
+  };
+  await saveSiteData(site);
+  await renderFooter();
+  alert('İletişim bilgileri güncellendi.');
+});
+
+/* ================= ADMIN TABS ================= */
+document.querySelectorAll('.sidebar-item').forEach(tab=>{
+  tab.addEventListener('click', async ()=>{
+    document.querySelectorAll('.sidebar-item').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-'+tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab === 'hero') await loadHeroPanel();
+    if(tab.dataset.tab === 'about') await loadAboutPanel();
+    if(tab.dataset.tab === 'categories') await renderAdminCategories();
+    if(tab.dataset.tab === 'social') await loadSocialPanel();
+    if(tab.dataset.tab === 'posts'){ await populateCategorySelect(); await renderAdminPostList(); }
+  });
+});
+
+/* ================= ROUTING + ŞİFRE ================= */
+const ADMIN_HASH = '#yk7-mnqx-92';
+const ADMIN_PASSWORD = 'PeterMcCrory2026!Yonetim';
+let isLoggedIn = false;
+
+function applyRoute(){
+  if(location.hash === ADMIN_HASH){
+    if(isLoggedIn){
+      document.getElementById('login-gate').style.display = 'none';
+      document.body.classList.add('admin-mode');
+      populateCategorySelect().then(renderAdminPostList);
+    } else {
+      document.getElementById('login-gate').style.display = 'flex';
+      document.body.classList.remove('admin-mode');
+    }
+  } else {
+    document.body.classList.remove('admin-mode');
+    document.getElementById('login-gate').style.display = 'none';
+  }
+}
+window.addEventListener('hashchange', applyRoute);
+document.getElementById('back-link').addEventListener('click', (e)=>{
+  e.preventDefault(); location.hash = '';
+});
+document.getElementById('logout-link').addEventListener('click', (e)=>{
+  e.preventDefault();
+  isLoggedIn = false;
+  location.hash = '';
+});
+function tryLogin(){
+  const val = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error');
+  if(val === ADMIN_PASSWORD){
+    isLoggedIn = true;
+    errorEl.style.display = 'none';
+    document.getElementById('login-password').value = '';
+    applyRoute();
+  } else {
+    errorEl.textContent = 'Şifre yanlış, tekrar dene.';
+    errorEl.style.display = 'block';
+  }
+}
+document.getElementById('login-submit').addEventListener('click', tryLogin);
+document.getElementById('login-password').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') tryLogin();
+});
+
+/* ================= BAŞLANGIÇ ================= */
+(async function init(){
+  await renderHero();
+  await renderAbout();
+  await renderCategories();
+  await renderCategoryPosts();
+  await renderFooter();
+  applyRoute();
+})();
+</script>
+</body>
+</html>
